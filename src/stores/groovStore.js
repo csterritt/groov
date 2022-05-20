@@ -6,14 +6,14 @@ export const useStore = defineStore('groovStore', {
   state: () => {
     return {
       // all these properties will have their type inferred automatically
-      counter: 0,
-      name: 'Eduardo',
-      isAdmin: true,
+      height: 200,
+      width: 300,
     }
   },
   actions: {
-    increment() {
-      this.counter++
+    setWidthAndHeight(newWidth, newHeight) {
+      this.height = newHeight
+      this.width = newWidth
     },
   },
 })

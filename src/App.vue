@@ -8,13 +8,34 @@
   </div>
 
   <div class="mx-6">
-    <h1 class="text-3xl font-bold underline">Hello {{ store.name }}!</h1>
+    <h1 class="text-3xl font-bold underline">The Groove Grid</h1>
 
     <div class="divider"></div>
 
-    <div class="mb-4">Count: {{ store.counter }}</div>
+    <div class="mt-4">
+      <svg
+        :width="store.width"
+        :height="store.height"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <rect width="100%" height="100%" fill="red" />
 
-    <button class="btn btn-primary" @click="incrementCount">Cool!</button>
+        <circle cx="150" cy="100" r="80" fill="green" />
+
+        <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">
+          SVG
+        </text>
+
+        <line
+          x1="10"
+          y1="80"
+          x2="100"
+          y2="20"
+          stroke="black"
+          stroke-width="2"
+        />
+      </svg>
+    </div>
   </div>
 </template>
 
@@ -22,8 +43,4 @@
 import { useStore } from './stores/groovStore.js'
 
 const store = useStore()
-
-const incrementCount = () => {
-  store.increment()
-}
 </script>
