@@ -8,6 +8,22 @@
   </div>
 
   <div class="mx-6">
-    <h1 class="text-3xl font-bold underline">Hello world!</h1>
+    <h1 class="text-3xl font-bold underline">Hello {{ store.name }}!</h1>
+
+    <div class="divider"></div>
+
+    <div class="mb-4">Count: {{ store.counter }}</div>
+
+    <button class="btn btn-primary" @click="incrementCount">Cool!</button>
   </div>
 </template>
+
+<script setup>
+import { useStore } from './stores/groovStore.js'
+
+const store = useStore()
+
+const incrementCount = () => {
+  store.increment()
+}
+</script>

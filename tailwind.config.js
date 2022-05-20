@@ -6,8 +6,8 @@ module.exports = {
   plugins: [require('daisyui')],
   daisyui: {
     styled: true,
-    themes: ['autumn', 'synthwave', 'cmyk'],
-    darkTheme: 'synthwave',
+    themes: ['emerald', 'aqua', 'cmyk'],
+    darkTheme: 'aqua',
     base: true,
     utils: true,
     logs: true,
