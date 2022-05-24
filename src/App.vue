@@ -13,6 +13,8 @@
     <div class="divider"></div>
 
     <div class="mt-4">
+      <div id="top-left"></div>
+
       <svg
         :width="store.width"
         :height="store.height"
@@ -40,7 +42,17 @@
 </template>
 
 <script setup>
+import { onMounted } from 'vue'
+
 import { useStore } from './stores/groovStore.js'
 
 const store = useStore()
+
+onMounted(() => {
+  store.setWidthAndHeightFromViewport()
+  const topLeftRect = document
+    .getElementById('top-left')
+    .getBoundingClientRect()
+  store.setTopLeft(topLeftRect)
+})
 </script>
