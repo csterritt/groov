@@ -29,9 +29,59 @@
             :x2="line.x2"
             :y2="line.y2"
             stroke="black"
-            stroke-width="4"
+            stroke-width="5"
             :stroke-dasharray="line.dashed ? 4 : 0"
           />
+
+          <circle
+            v-if="!line.dashed"
+            :cx="line.x1"
+            :cy="line.y1 - 8"
+            r="14"
+            fill="#ddb"
+            stroke="black"
+            stroke-width="2"
+          />
+
+          <circle
+            v-if="!line.dashed"
+            :cx="line.x1"
+            :cy="line.y2"
+            r="14"
+            fill="#ddb"
+            stroke="black"
+            stroke-width="2"
+          />
+
+          <circle
+            v-if="!line.dashed"
+            :cx="line.x1"
+            :cy="line.y1 - 8"
+            r="14"
+            fill="#ddb"
+            stroke="black"
+            stroke-width="2"
+          />
+
+          <circle
+            v-if="!line.dashed"
+            :cx="line.x1"
+            :cy="line.y1 - 8"
+            r="14"
+            fill="#ddb"
+            stroke="black"
+            stroke-width="2"
+          />
+
+          <text
+            :x="line.x1"
+            :y="line.y1"
+            font-size="24"
+            text-anchor="middle"
+            fill="black"
+          >
+            {{ line.label }}
+          </text>
         </g>
       </svg>
     </div>

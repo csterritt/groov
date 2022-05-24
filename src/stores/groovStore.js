@@ -1,23 +1,33 @@
 import { defineStore } from 'pinia'
 
 const MARGIN_SIZE = 20
-const LINE_WIDTH = 4
+const LINE_WIDTH = 5
 const LINE_BASE = 10
 const LINE_LENGTHS = [90, 30, 60, 30]
+const LINE_LABELS = [null, 'e', '&', 'a']
 const linesAndHeightsUnscaled = []
 
 const setupLinesAndHeights = () => {
+  let beatNumber = 1
   for (let index = 0; index < 16; index += 1) {
+    let label = LINE_LABELS[index % 4]
+    if (label == null) {
+      label = `${beatNumber}`
+      beatNumber += 1
+    }
+
     linesAndHeightsUnscaled.push({
       id: index,
       height: LINE_LENGTHS[index % 4],
       dashed: false,
+      label,
     })
   }
   linesAndHeightsUnscaled.push({
     id: 16,
     height: 90,
     dashed: true,
+    label: '',
   })
 }
 setupLinesAndHeights()
