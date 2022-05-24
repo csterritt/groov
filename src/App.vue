@@ -20,22 +20,19 @@
         :height="store.height"
         xmlns="http://www.w3.org/2000/svg"
       >
-        <rect width="100%" height="100%" fill="red" />
+        <rect width="100%" height="100%" fill="#ddb" />
 
-        <circle cx="150" cy="100" r="80" fill="green" />
-
-        <text x="150" y="125" font-size="60" text-anchor="middle" fill="white">
-          SVG
-        </text>
-
-        <line
-          x1="10"
-          y1="80"
-          x2="100"
-          y2="20"
-          stroke="black"
-          stroke-width="2"
-        />
+        <g v-for="line in store.linesAndHeights" :key="line.id">
+          <line
+            :x1="line.x1"
+            :y1="line.y1"
+            :x2="line.x2"
+            :y2="line.y2"
+            stroke="black"
+            stroke-width="4"
+            :stroke-dasharray="line.dashed ? 4 : 0"
+          />
+        </g>
       </svg>
     </div>
   </div>
