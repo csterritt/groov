@@ -7,17 +7,18 @@
     </div>
   </div>
 
-  <div class="mx-6">
+  <div class="flex flex-col flex-grow mx-6">
     <h1 class="text-3xl font-bold underline">The Groove Grid</h1>
 
     <div class="divider"></div>
 
-    <div class="mt-4">
+    <div class="flex flex-col flex-grow">
       <div id="top-left"></div>
 
       <svg
-        :width="store.width"
-        :height="store.height"
+        class="flex-grow w-full"
+        width="200"
+        height="200"
         xmlns="http://www.w3.org/2000/svg"
       >
         <rect width="100%" height="100%" fill="#ddb" />
@@ -84,22 +85,48 @@
           </text>
         </g>
       </svg>
+
+      <div id="bottom-left"></div>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="mb-4">
+      <div class="text-lg mb-2">Controls area</div>
+
+      <div class="flex flex-row justify-between">
+        <button class="btn btn-primary">Button 1</button>
+        <button class="btn btn-primary">Button 2</button>
+        <button class="btn btn-primary">Button 3</button>
+        <button class="btn btn-primary">Button 4</button>
+      </div>
     </div>
   </div>
 </template>
 
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, onUpdated } from 'vue'
 
 import { useStore } from './stores/groovStore.js'
 
 const store = useStore()
 
-onMounted(() => {
+const updateDimensions = () => {
   store.setWidthAndHeightFromViewport()
   const topLeftRect = document
     .getElementById('top-left')
     .getBoundingClientRect()
-  store.setTopLeft(topLeftRect)
+  const bottomLeftRect = document
+    .getElementById('bottom-left')
+    .getBoundingClientRect()
+  store.setTopAndBottom(topLeftRect, bottomLeftRect)
+}
+
+onMounted(() => {
+  updateDimensions()
+})
+
+onUpdated(() => {
+  updateDimensions()
 })
 </script>

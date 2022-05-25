@@ -40,12 +40,13 @@ export const useStore = defineStore('groovStore', {
       viewPortHeight: 200,
       viewPortWidth: 300,
       topLeftHeightOffset: 0,
+      bottomLeftHeightOffset: 0,
       topLeftWidthOffset: 60,
     }
   },
 
   getters: {
-    height: (state) => state.viewPortHeight - state.topLeftHeightOffset,
+    height: (state) => state.bottomLeftHeightOffset - state.topLeftHeightOffset,
     width: (state) => state.viewPortWidth - state.topLeftWidthOffset,
     linesAndHeights: (state) => {
       const numLines = linesAndHeightsUnscaled.length
@@ -75,8 +76,9 @@ export const useStore = defineStore('groovStore', {
       this.viewPortWidth = newWidth
     },
 
-    setTopLeft(topLeftRect) {
+    setTopAndBottom(topLeftRect, bottomLeftRect) {
       this.topLeftHeightOffset = topLeftRect.y + MARGIN_SIZE
+      this.bottomLeftHeightOffset = bottomLeftRect.y - MARGIN_SIZE
       this.topLeftWidthOffset = this.viewPortWidth - topLeftRect.width
     },
 
