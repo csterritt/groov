@@ -8,7 +8,7 @@
   </div>
 
   <div class="flex flex-col flex-grow mx-6">
-    <h1 class="text-3xl font-bold underline">The Groove Grid</h1>
+    <h1 class="text-3xl font-bold">The Groove Grid</h1>
 
     <div class="divider"></div>
 
@@ -34,35 +34,7 @@
             :stroke-dasharray="line.dashed ? 4 : 0"
           />
 
-          <circle
-            v-if="!line.dashed"
-            :cx="line.x1"
-            :cy="line.y1 - 8"
-            r="14"
-            fill="#ddb"
-            stroke="black"
-            stroke-width="2"
-          />
-
-          <circle
-            v-if="!line.dashed"
-            :cx="line.x1"
-            :cy="line.y2"
-            r="14"
-            fill="#ddb"
-            stroke="black"
-            stroke-width="2"
-          />
-
-          <circle
-            v-if="!line.dashed"
-            :cx="line.x1"
-            :cy="line.y1 - 8"
-            r="14"
-            fill="#ddb"
-            stroke="black"
-            stroke-width="2"
-          />
+          <beat-circle v-if="!line.dashed" :cx="line.x1" :cy="line.y2" />
 
           <circle
             v-if="!line.dashed"
@@ -108,6 +80,7 @@
 import { onMounted, onUpdated } from 'vue'
 
 import { useStore } from './stores/groovStore.js'
+import BeatCircle from './components/BeatCircle.vue'
 
 const store = useStore()
 
