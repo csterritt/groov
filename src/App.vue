@@ -24,42 +24,44 @@
         <rect width="100%" height="100%" fill="#ddb" />
 
         <g v-for="line in store.linesAndHeights" :key="line.id">
-          <line
-            :x1="line.x1"
-            :y1="line.y1"
-            :x2="line.x2"
-            :y2="line.y2"
-            stroke="black"
-            stroke-width="5"
-            :stroke-dasharray="line.dashed ? 4 : 0"
-          />
+          <template v-if="line.visible">
+            <line
+              :x1="line.x1"
+              :y1="line.y1"
+              :x2="line.x2"
+              :y2="line.y2"
+              stroke="black"
+              stroke-width="5"
+              :stroke-dasharray="line.dashed ? 4 : 0"
+            />
 
-          <beat-circle
-            v-if="!line.dashed"
-            :id="line.id"
-            :cx="line.x1"
-            :cy="line.y2"
-          />
+            <beat-circle
+              v-if="!line.dashed"
+              :id="line.id"
+              :cx="line.x1"
+              :cy="line.y2"
+            />
 
-          <circle
-            v-if="!line.dashed"
-            :cx="line.x1"
-            :cy="line.y1 - 8"
-            r="14"
-            fill="#ddb"
-            stroke="black"
-            stroke-width="2"
-          />
+            <circle
+              v-if="!line.dashed"
+              :cx="line.x1"
+              :cy="line.y1 - 8"
+              r="14"
+              fill="#ddb"
+              stroke="black"
+              stroke-width="2"
+            />
 
-          <text
-            :x="line.x1"
-            :y="line.y1"
-            font-size="24"
-            text-anchor="middle"
-            fill="black"
-          >
-            {{ line.label }}
-          </text>
+            <text
+              :x="line.x1"
+              :y="line.y1"
+              font-size="24"
+              text-anchor="middle"
+              fill="black"
+            >
+              {{ line.label }}
+            </text>
+          </template>
         </g>
       </svg>
 
@@ -69,14 +71,7 @@
     <div class="divider"></div>
 
     <div class="mb-4">
-      <div class="text-lg mb-2">Controls area</div>
-
-      <div class="flex flex-row justify-between">
-        <button class="btn btn-primary">Button 1</button>
-        <button class="btn btn-primary">Button 2</button>
-        <button class="btn btn-primary">Button 3</button>
-        <button class="btn btn-primary">Button 4</button>
-      </div>
+      <controls-area />
     </div>
   </div>
 </template>
@@ -86,6 +81,7 @@ import { onMounted, onUpdated } from 'vue'
 
 import { useStore } from './stores/groovStore.js'
 import BeatCircle from './components/BeatCircle.vue'
+import ControlsArea from './components/ControlsArea.vue'
 
 const store = useStore()
 

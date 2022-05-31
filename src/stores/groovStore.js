@@ -26,6 +26,7 @@ const setupLinesAndHeights = () => {
       selected: false,
     }
   }
+
   rawLinesAndHeightsUnscaled[NUMBER_OF_BEATS] = {
     id: 16,
     height: 90,
@@ -48,6 +49,8 @@ export const useStore = defineStore('groovStore', {
       bottomLeftHeightOffset: 0,
       topLeftWidthOffset: 60,
       linesAndHeightsUnscaled: rawLinesAndHeightsUnscaled,
+      eighthsVisible: true,
+      sixteenthsVisible: true,
     }
   },
 
@@ -81,6 +84,8 @@ export const useStore = defineStore('groovStore', {
 
     isLineSelected: (state) => (id) =>
       state.linesAndHeightsUnscaled[id].selected,
+
+    isLineVisible: (state) => (id) => state.linesAndHeightsUnscaled[id].visible,
   },
 
   actions: {
@@ -105,6 +110,43 @@ export const useStore = defineStore('groovStore', {
     toggleLineSelected(lineId) {
       const newLines = [...this.linesAndHeightsUnscaled]
       newLines[lineId].selected = !newLines[lineId].selected
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    toggleLineVisible(lineId) {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines[lineId].visible = !newLines[lineId].visible
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    toggleEighthsVisible() {
+      this.eighthsVisible = !this.eighthsVisible
+      if (!this.eighthsVisible) {
+        this.sixteenthsVisible = false
+      }
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (
+          line.label === '&' ||
+          (!this.eighthsVisible && (line.label === 'e' || line.label === 'a'))
+        ) {
+          line.visible = this.eighthsVisible
+        }
+      })
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    toggleSixteenthsVisible() {
+      this.sixteenthsVisible = !this.sixteenthsVisible
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (line.label === 'e' || line.label === 'a') {
+          line.visible = this.sixteenthsVisible
+        }
+      })
 
       this.linesAndHeightsUnscaled = newLines
     },

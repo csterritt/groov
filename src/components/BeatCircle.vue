@@ -18,7 +18,7 @@ const props = defineProps({ id: Number, cx: Number, cy: Number })
 const store = useStore()
 
 const fillUnselected = '#ddb'
-const fillSelected = '#dbb'
+const fillSelected = '#dd4548'
 
 const isLineSelected = store.isLineSelected
 
