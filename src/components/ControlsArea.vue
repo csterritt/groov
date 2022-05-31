@@ -2,21 +2,35 @@
   <div class="text-lg mb-2">Controls:</div>
 
   <div class="flex flex-row mb-2">
-    <button class="btn btn-primary btn-sm mr-4">Clear all</button>
-    <button class="btn btn-primary btn-sm mr-4">Clear downbeats</button>
-    <button class="btn btn-primary btn-sm mr-4">Clear eighths</button>
-    <button class="btn btn-primary btn-sm mr-4">Clear sixteenths</button>
+    <button class="btn btn-primary btn-sm mr-4" @click="store.clearAll">
+      Clear all
+    </button>
+
+    <button class="btn btn-primary btn-sm mr-4" @click="store.clearDownbeats">
+      Clear downbeats
+    </button>
+
+    <button class="btn btn-primary btn-sm mr-4" @click="store.clearEighths">
+      Clear eighths
+    </button>
+
+    <button class="btn btn-primary btn-sm mr-4" @click="store.clearSixteenths">
+      Clear sixteenths
+    </button>
   </div>
 
   <div class="flex flex-row mb-2">
-    <button class="btn btn-primary btn-sm mr-4" @click="onToggleEighthsClick">
+    <button
+      class="btn btn-primary btn-sm mr-4"
+      @click="store.toggleEighthsVisible"
+    >
       {{ store.eighthsVisible ? 'Hide' : 'Show' }} eighths
     </button>
 
     <button
       class="btn btn-primary btn-sm mr-4"
-      @click="onToggleSixteenthsClick"
-      :disabled="eighthsAreHidden()"
+      @click="store.toggleSixteenthsVisible"
+      :disabled="!store.eighthsVisible"
     >
       {{ store.sixteenthsVisible ? 'Hide' : 'Show' }} sixteenths
     </button>
@@ -34,14 +48,4 @@
 import { useStore } from '../stores/groovStore'
 
 const store = useStore()
-
-const onToggleEighthsClick = () => {
-  store.toggleEighthsVisible()
-}
-
-const onToggleSixteenthsClick = () => {
-  store.toggleSixteenthsVisible()
-}
-
-const eighthsAreHidden = () => !store.eighthsVisible
 </script>

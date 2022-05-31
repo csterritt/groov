@@ -150,5 +150,44 @@ export const useStore = defineStore('groovStore', {
 
       this.linesAndHeightsUnscaled = newLines
     },
+
+    clearEighths() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (line.label === '&') {
+          line.selected = false
+        }
+      })
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    clearSixteenths() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (line.label === 'e' || line.label === 'a') {
+          line.selected = false
+        }
+      })
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    clearDownbeats() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (line.label !== '&' && line.label !== 'e' && line.label !== 'a') {
+          line.selected = false
+        }
+      })
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    clearAll() {
+      this.clearDownbeats()
+      this.clearEighths()
+      this.clearSixteenths()
+    },
   },
 })
