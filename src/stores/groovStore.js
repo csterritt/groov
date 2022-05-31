@@ -5,30 +5,35 @@ const LINE_WIDTH = 5
 const LINE_BASE = 10
 const LINE_LENGTHS = [90, 30, 60, 30]
 const LINE_LABELS = [null, 'e', '&', 'a']
-const linesAndHeightsUnscaled = []
+const NUMBER_OF_BEATS = 16
+const rawLinesAndHeightsUnscaled = []
 
 const setupLinesAndHeights = () => {
   let beatNumber = 1
-  for (let index = 0; index < 16; index += 1) {
+  for (let index = 0; index < NUMBER_OF_BEATS; index += 1) {
     let label = LINE_LABELS[index % 4]
     if (label == null) {
       label = `${beatNumber}`
       beatNumber += 1
     }
 
-    linesAndHeightsUnscaled.push({
+    rawLinesAndHeightsUnscaled[index] = {
       id: index,
       height: LINE_LENGTHS[index % 4],
       dashed: false,
       label,
-    })
+      visible: true,
+      selected: false,
+    }
   }
-  linesAndHeightsUnscaled.push({
+  rawLinesAndHeightsUnscaled[NUMBER_OF_BEATS] = {
     id: 16,
     height: 90,
     dashed: true,
     label: '',
-  })
+    visible: true,
+    selected: false,
+  }
 }
 setupLinesAndHeights()
 
@@ -42,15 +47,18 @@ export const useStore = defineStore('groovStore', {
       topLeftHeightOffset: 0,
       bottomLeftHeightOffset: 0,
       topLeftWidthOffset: 60,
+      linesAndHeightsUnscaled: rawLinesAndHeightsUnscaled,
     }
   },
 
   getters: {
     height: (state) => state.bottomLeftHeightOffset - state.topLeftHeightOffset,
+
     width: (state) => state.viewPortWidth - state.topLeftWidthOffset,
+
     linesAndHeights: (state) => {
-      const numLines = linesAndHeightsUnscaled.length
-      return linesAndHeightsUnscaled.map((line, index) => {
+      const numLines = state.linesAndHeightsUnscaled.length
+      return state.linesAndHeightsUnscaled.map((line, index) => {
         const pct = line.height / 100
         const maxY = state.height - 2 * MARGIN_SIZE
         const lineLength = pct * maxY
@@ -65,9 +73,14 @@ export const useStore = defineStore('groovStore', {
           y1: state.height - LINE_BASE,
           y2: state.height - (lineLength + MARGIN_SIZE),
           dashed: line.dashed,
+          visible: line.visible,
+          selected: line.selected,
         }
       })
     },
+
+    isLineSelected: (state) => (id) =>
+      state.linesAndHeightsUnscaled[id].selected,
   },
 
   actions: {
@@ -87,6 +100,13 @@ export const useStore = defineStore('groovStore', {
         window.visualViewport.width,
         window.visualViewport.height
       )
+    },
+
+    toggleLineSelected(lineId) {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines[lineId].selected = !newLines[lineId].selected
+
+      this.linesAndHeightsUnscaled = newLines
     },
   },
 })

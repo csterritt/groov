@@ -34,7 +34,12 @@
             :stroke-dasharray="line.dashed ? 4 : 0"
           />
 
-          <beat-circle v-if="!line.dashed" :cx="line.x1" :cy="line.y2" />
+          <beat-circle
+            v-if="!line.dashed"
+            :id="line.id"
+            :cx="line.x1"
+            :cy="line.y2"
+          />
 
           <circle
             v-if="!line.dashed"

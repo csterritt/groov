@@ -3,7 +3,7 @@
     :cx="cx"
     :cy="cy"
     r="14"
-    :fill="fill"
+    :fill="fillValue()"
     stroke="black"
     stroke-width="2"
     @click="onClick"
@@ -11,17 +11,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { useStore } from '../stores/groovStore'
 
-defineProps({ cx: Number, cy: Number })
+const props = defineProps({ id: Number, cx: Number, cy: Number })
 
-let fill = ref('#ddb')
+const store = useStore()
+
+const fillUnselected = '#ddb'
+const fillSelected = '#dbb'
+
+const isLineSelected = store.isLineSelected
+
+const fillValue = () =>
+  isLineSelected(props.id) ? fillSelected : fillUnselected
 
 const onClick = () => {
-  if (fill.value === '#ddb') {
-    fill.value = '#dbb'
-  } else {
-    fill.value = '#ddb'
-  }
+  store.toggleLineSelected(props.id)
 }
 </script>
