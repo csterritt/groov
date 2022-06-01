@@ -37,10 +37,32 @@
   </div>
 
   <div class="flex flex-row mb-2">
-    <button class="btn btn-primary btn-sm mr-4">Randomize all visible</button>
-    <button class="btn btn-primary btn-sm mr-4">Randomize downbeats</button>
-    <button class="btn btn-primary btn-sm mr-4">Randomize eighths</button>
-    <button class="btn btn-primary btn-sm mr-4">Randomize sixteenths</button>
+    <button class="btn btn-primary btn-sm mr-4" @click="store.randomizeAll">
+      Randomize all visible
+    </button>
+
+    <button
+      class="btn btn-primary btn-sm mr-4"
+      @click="store.randomizeDownbeats"
+    >
+      Randomize downbeats
+    </button>
+
+    <button
+      class="btn btn-primary btn-sm mr-4"
+      @click="store.randomizeEighths"
+      :disabled="!store.eighthsVisible"
+    >
+      Randomize eighths
+    </button>
+
+    <button
+      class="btn btn-primary btn-sm mr-4"
+      @click="store.randomizeSixteenths"
+      :disabled="!store.eighthsVisible || !store.sixteenthsVisible"
+    >
+      Randomize sixteenths
+    </button>
   </div>
 </template>
 

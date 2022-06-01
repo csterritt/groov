@@ -189,5 +189,64 @@ export const useStore = defineStore('groovStore', {
       this.clearEighths()
       this.clearSixteenths()
     },
+
+    randomizeAll() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      newLines.forEach((line) => {
+        if (line.visible) {
+          line.selected = Math.random() < 0.5
+        }
+      })
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    randomizeDownbeats() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      let oneSelected = false
+      while (!oneSelected) {
+        newLines.forEach((line) => {
+          if (line.label !== '&' && line.label !== 'e' && line.label !== 'a') {
+            const val = Math.random() < 0.5
+            oneSelected ||= val
+            line.selected = val
+          }
+        })
+      }
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    randomizeEighths() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      let oneSelected = false
+      while (!oneSelected) {
+        newLines.forEach((line) => {
+          if (line.label === '&') {
+            const val = Math.random() < 0.5
+            oneSelected ||= val
+            line.selected = val
+          }
+        })
+      }
+
+      this.linesAndHeightsUnscaled = newLines
+    },
+
+    randomizeSixteenths() {
+      const newLines = [...this.linesAndHeightsUnscaled]
+      let oneSelected = false
+      while (!oneSelected) {
+        newLines.forEach((line) => {
+          if (line.label === 'e' || line.label === 'a') {
+            const val = Math.random() < 0.5
+            oneSelected ||= val
+            line.selected = val
+          }
+        })
+      }
+
+      this.linesAndHeightsUnscaled = newLines
+    },
   },
 })
