@@ -23,12 +23,22 @@
       >
         <rect width="100%" height="100%" fill="#ddb" />
 
+        <line
+          :x1="minXmaxXmaxY.minX"
+          :y1="minXmaxXmaxY.maxY"
+          :x2="minXmaxXmaxY.maxX"
+          :y2="minXmaxXmaxY.maxY"
+          stroke="black"
+          stroke-width="5"
+          :stroke-dasharray="false"
+        />
+
         <g v-for="line in store.linesAndHeights" :key="line.id">
           <template v-if="line.visible">
             <line
-              :x1="line.x1"
-              :y1="line.y1"
-              :x2="line.x2"
+              :x1="line.x"
+              :y1="line.y1 + 2"
+              :x2="line.x"
               :y2="line.y2"
               stroke="black"
               stroke-width="5"
@@ -38,14 +48,14 @@
             <beat-circle
               v-if="!line.dashed"
               :id="line.id"
-              :cx="line.x1"
+              :cx="line.x"
               :cy="line.y2"
             />
 
             <circle
               v-if="!line.dashed"
-              :cx="line.x1"
-              :cy="line.y1 - 8"
+              :cx="line.x"
+              :cy="line.y1"
               r="14"
               fill="#ddb"
               stroke="black"
@@ -53,8 +63,8 @@
             />
 
             <text
-              :x="line.x1"
-              :y="line.y1"
+              :x="line.x"
+              :y="line.y1 + 7"
               font-size="24"
               text-anchor="middle"
               fill="black"
@@ -77,13 +87,14 @@
 </template>
 
 <script setup>
-import { onMounted, onUpdated } from 'vue'
+import { onMounted, onUpdated, ref } from 'vue'
 
 import { useStore } from './stores/groovStore.js'
 import BeatCircle from './components/BeatCircle.vue'
 import ControlsArea from './components/ControlsArea.vue'
 
 const store = useStore()
+let minXmaxXmaxY = ref(store.minXmaxXmaxY)
 
 const updateDimensions = () => {
   store.setWidthAndHeightFromViewport()
@@ -94,6 +105,7 @@ const updateDimensions = () => {
     .getElementById('bottom-left')
     .getBoundingClientRect()
   store.setTopAndBottom(topLeftRect, bottomLeftRect)
+  minXmaxXmaxY.value = store.minXmaxXmaxY
 }
 
 onMounted(() => {

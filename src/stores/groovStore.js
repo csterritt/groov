@@ -61,25 +61,48 @@ export const useStore = defineStore('groovStore', {
 
     linesAndHeights: (state) => {
       const numLines = state.linesAndHeightsUnscaled.length
+      const maxY = state.height - 2 * MARGIN_SIZE
+      const maxX = state.width - 2 * MARGIN_SIZE
+      const linesWidth = numLines * LINE_WIDTH
+      const xSpaceWidth = (maxX - linesWidth) / (numLines - 1)
       return state.linesAndHeightsUnscaled.map((line, index) => {
         const pct = line.height / 100
-        const maxY = state.height - 2 * MARGIN_SIZE
         const lineLength = pct * maxY
-        const maxX = state.width - 2 * MARGIN_SIZE
-        const linesWidth = numLines * LINE_WIDTH
-        const xSpaceWidth = (maxX - linesWidth) / (numLines - 1)
         const xLocation = MARGIN_SIZE + index * LINE_WIDTH + index * xSpaceWidth
+        const y1 = state.height - LINE_BASE
+
         return {
           ...line,
-          x1: xLocation,
-          x2: xLocation,
-          y1: state.height - LINE_BASE,
+          x: xLocation,
+          y1,
           y2: state.height - (lineLength + MARGIN_SIZE),
           dashed: line.dashed,
           visible: line.visible,
           selected: line.selected,
         }
       })
+    },
+
+    minXmaxXmaxY: (state) => {
+      const linesAndHeights = state.linesAndHeights
+      let minX = 100000
+      let maxX = -100000
+      let maxY = -100000
+      linesAndHeights.forEach((line) => {
+        if (line.x > maxX) {
+          maxX = line.x
+        }
+
+        if (line.x < minX) {
+          minX = line.x
+        }
+
+        if (line.y1 > maxY) {
+          maxY = line.y1
+        }
+      })
+
+      return { minX, maxX, maxY: maxY }
     },
 
     isLineSelected: (state) => (id) =>
