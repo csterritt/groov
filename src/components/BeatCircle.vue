@@ -4,7 +4,7 @@
     :cy="cy"
     r="14"
     :fill="fillValue()"
-    stroke="black"
+    :stroke="strokeColor"
     stroke-width="2"
     @click="onClick"
   />
@@ -13,7 +13,12 @@
 <script setup>
 import { useStore } from '../stores/groovStore'
 
-const props = defineProps({ id: Number, cx: Number, cy: Number })
+const props = defineProps({
+  id: Number,
+  cx: Number,
+  cy: Number,
+  strokeColor: String,
+})
 
 const store = useStore()
 

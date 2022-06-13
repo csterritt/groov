@@ -40,7 +40,7 @@
               :y1="line.y1 + 2"
               :x2="line.x"
               :y2="line.y2"
-              stroke="black"
+              :stroke="line.selected ? BLACK : GRAY"
               stroke-width="5"
               :stroke-dasharray="line.dashed ? 4 : 0"
             />
@@ -50,6 +50,7 @@
               :id="line.id"
               :cx="line.x"
               :cy="line.y2"
+              :stroke-color="line.selected ? BLACK : GRAY"
             />
 
             <circle
@@ -58,7 +59,7 @@
               :cy="line.y1"
               r="14"
               fill="#ddb"
-              stroke="black"
+              :stroke="line.selected ? BLACK : GRAY"
               stroke-width="2"
             />
 
@@ -67,7 +68,6 @@
               :y="line.y1 + 7"
               font-size="24"
               text-anchor="middle"
-              fill="black"
             >
               {{ line.label }}
             </text>
@@ -95,6 +95,8 @@ import ControlsArea from './components/ControlsArea.vue'
 
 const store = useStore()
 let minXmaxXmaxY = ref(store.minXmaxXmaxY)
+const BLACK = ref('black')
+const GRAY = ref('#aaa')
 
 const updateDimensions = () => {
   store.setWidthAndHeightFromViewport()
